@@ -6,6 +6,7 @@ class Pokemon(object):
         self.name = str(name)  # Название покемона
         self.level = level  # Уровень покемона
         self.poke_type = poke_type  # Тип покемона
+
         self.hp = hp  # Очки здоровья
         self.atk = atk  # Атака
         self.defense = defense  # Защита
@@ -21,15 +22,18 @@ class Pokemon(object):
         return "\n" + self.name + " получает уровень  " + str(self.level) + "!\n"
 
     def attack(self, enemy):
-        dmg = random.randint(1, 10)
-        critical_attack = random.randint(0, 1)
+        dmg = int(self.atk/10)
+        critical_attack = random.randint(0, 5)
         print(self.name + " атакует ")
-        if critical_attack == 1:
-            dmg += 5
+        if critical_attack == 5:
+            dmg = int(dmg + (self.special_attack/10))
             print("Критический удар! " + enemy.name + " теряет " + str(dmg) + " здоровья.")
-        enemy.hp -= dmg
+        enemy.hp = int(enemy.hp + (enemy.defense/10) - dmg)
         print(enemy.name + " потерял " + str(dmg) + " здоровья. Осталось " + str(enemy.hp) + " здоровья")
 
+        if enemy.poke_type == self.poke_type:
+            dmg = int(dmg/2)
+            print(enemy.name + " того же типа, что и " + self.name + " и получает меньше урона " + str(dmg))
         if enemy.death():
             print(str(self.level_up()))
 
@@ -99,7 +103,7 @@ class Rattata(Pokemon):
 
 
 def main():
-    team1 = Rattata()
+    team1 = Ivysaur()
     team2 = Bulbasaur()
     print()
     while team1.hp > 0 and team2.hp > 0:
