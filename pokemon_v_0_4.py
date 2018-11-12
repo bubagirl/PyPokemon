@@ -102,23 +102,38 @@ class Rattata(Pokemon):
             print(enemy.name + " осталось" + str(enemy.hp) + " здоровья.")
 
 
-def main():
-    team1 = Ivysaur()
-    team2 = Bulbasaur()
-    print()
-    while team1.hp > 0 and team2.hp > 0:
-        if team1.hp > 0:
-            print(team1.attack(team2))
-            print()
-        if team2.hp > 0:
-            print(team2.attack(team1))
-            print()
-    if team1.death():
-        print(team2.name + " победил!")
-        print(team1.name + " теряет сознание ")
-    else:
-        print(team1.name + " победил!")
-        print(team2.name + " теряет сознание")
+p = (Bulbasaur(), Ivysaur(), Rattata())
 
+
+def main():
+    team1 = (random.choice(p), random.choice(p))
+    team2 = (random.choice(p), random.choice(p))
+    print()
+    while team1[0].hp > 0 and team2[0].hp > 0:
+        if team1[0].hp > 0:
+            print(team1[0].attack(team2[0]))
+            print()
+        if team2[0].hp > 0:
+            print(team2[0].attack(team1[0]))
+            print()
+
+    if team1[0].death():
+        print(team2[0].name + " победил!")
+        print(team1[0].name + " теряет сознание ")
+        print()
+
+        if team2[0].hp > 0:
+            print(team1[1].name + " вступает в игрy")
+            print(team1[1].attack(team2[0]))
+            print()
+    else:
+        print(team1[0].name + " победил!")
+        print(team2[0].name + " теряет сознание")
+        print()
+
+        if team1[0].hp > 0:
+            print(team2[1].name + " вступает в игрy")
+            print(team2[1].attack(team1[0]))
+            print()
 
 main()
